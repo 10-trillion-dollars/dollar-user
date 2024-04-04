@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.dollaruser.address.dto.AddressRequestDto;
 import org.example.dollaruser.address.dto.AddressResponseDto;
 import org.example.dollaruser.address.service.AddressService;
-import org.example.dollaruser.global.security.UserDetailsImpl;
+import org.example.share.config.global.security.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;

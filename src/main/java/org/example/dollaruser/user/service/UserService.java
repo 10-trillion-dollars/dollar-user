@@ -8,9 +8,9 @@ import org.example.dollaruser.user.dto.LoginRequestDto;
 import org.example.dollaruser.user.dto.ModifyPasswordRequestDto;
 import org.example.dollaruser.user.dto.ModifyUserNameRequestDto;
 import org.example.dollaruser.user.dto.SignupRequestDto;
-import org.example.dollaruser.user.entity.User;
-import org.example.dollaruser.user.entity.UserRoleEnum;
 import org.example.dollaruser.user.repository.UserRepository;
+import org.example.share.config.global.entity.user.User;
+import org.example.share.config.global.entity.user.UserRoleEnum;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -109,5 +109,10 @@ public class UserService {
         }
 
         userRepository.deleteById(user.getId());
+    }
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
     }
 }
