@@ -9,6 +9,7 @@ import org.example.dollaruser.user.dto.LoginRequestDto;
 import org.example.dollaruser.user.dto.ModifyPasswordRequestDto;
 import org.example.dollaruser.user.dto.ModifyUserNameRequestDto;
 import org.example.dollaruser.user.dto.SignupRequestDto;
+import org.example.dollaruser.user.dto.UserResponseDto;
 import org.example.dollaruser.user.service.UserService;
 import org.example.share.config.global.entity.user.User;
 import org.example.share.config.global.jwt.JwtUtil;
@@ -16,6 +17,7 @@ import org.example.share.config.global.security.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,6 +52,13 @@ public class UserController {
         jwtUtil.addJwtToCookie(token, response);
 
         return ResponseEntity.ok().body("로그인 성공");
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<UserResponseDto> showUser(
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        UserResponseDto userResponseDto = userService.showUser(userDetails.getUser());
+        return ResponseEntity.ok().body(userResponseDto);
     }
 
     @PutMapping("/username")
