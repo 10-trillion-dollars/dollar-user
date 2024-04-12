@@ -39,20 +39,18 @@ public class UserController {
         userService.signup(signupRequestDto);
         return ResponseEntity.ok().body("회원가입 성공");
     }
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto,
         HttpServletResponse response) {
         User loginedUser = userService.login(loginRequestDto);
-
         String token = jwtUtil.createToken(loginedUser.getId(), loginedUser.getEmail(),
             loginedUser.getUsername(), loginedUser.getRole());
-
         response.setHeader(JwtUtil.AUTHORIZATION_HEADER, token);
         jwtUtil.addJwtToCookie(token, response);
 
-        return ResponseEntity.ok().body("로그인 성공");
+        return ResponseEntity.ok().body(loginedUser.getRole().toString());
     }
+
 
     @GetMapping("/profile")
     public ResponseEntity<UserResponseDto> showUser(
@@ -60,6 +58,7 @@ public class UserController {
         UserResponseDto userResponseDto = userService.showUser(userDetails.getUser());
         return ResponseEntity.ok().body(userResponseDto);
     }
+
 
     @PutMapping("/username")
     public ResponseEntity<String> modifyUsername(
@@ -88,6 +87,5 @@ public class UserController {
 
         return ResponseEntity.ok().body("회원 탈퇴 성공");
     }
-
 
 }
