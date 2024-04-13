@@ -68,5 +68,5 @@ jobs:
           script: |
             # docker compose down
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/user
-            docker compose restart ubuntu-user-service-1
+            docker compose restart ${{ secrets.DOCKERHUB_USERNAME }}/user:latest
         
