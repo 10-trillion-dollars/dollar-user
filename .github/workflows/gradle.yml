@@ -66,6 +66,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
+            docker compose down
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/user
-            docker compose restart user-service
+            docker compose up --detach
         
