@@ -32,7 +32,7 @@ public class AddressController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         addressService.createAddress(requestDto, userDetails.getUser());
 
-        return ResponseEntity.ok("주소 생성 완료");
+        return ResponseEntity.status(201).body("주소 생성 완료");
     }
 
     @GetMapping
@@ -40,7 +40,7 @@ public class AddressController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         List<AddressResponseDto> addressList = addressService.getUserAllAddress(userDetails.getUser());
 
-        return ResponseEntity.ok(addressList);
+        return ResponseEntity.status(200).body(addressList);
     }
 
     @PutMapping("/{addressId}")
@@ -50,7 +50,7 @@ public class AddressController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) throws AccessDeniedException {
         addressService.updateAddress(addressId, requestDto, userDetails.getUser());
 
-        return ResponseEntity.ok("주소 수정 완료");
+        return ResponseEntity.status(200).body("주소 수정 완료");
     }
 
     @DeleteMapping("/{addressId}")
@@ -59,6 +59,6 @@ public class AddressController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) throws AccessDeniedException {
         addressService.deleteAddress(addressId, userDetails.getUser());
 
-        return ResponseEntity.ok("주소 삭제 완료");
+        return ResponseEntity.status(200).body("주소 삭제 완료");
     }
 }
