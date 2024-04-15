@@ -90,8 +90,8 @@ public class UserController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
-        jwtUtil.removeJwtAtCookie(request, response);
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        jwtUtil.removeJwtAtCookie(response);
         return ResponseEntity.ok().body("로그아웃 성공");
     }
 }
