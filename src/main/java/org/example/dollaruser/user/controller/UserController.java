@@ -88,4 +88,9 @@ public class UserController {
         return ResponseEntity.ok().body("회원 탈퇴 성공");
     }
 
+//    @DeleteMapping("/logout")
+//    public ResponseEntity<String> logout(HttpServletResponse response) {
+//        jwtUtil.removeJwtAtCookie(response);
+//        return ResponseEntity.ok().body("로그아웃 성공");
+//    }
 }
