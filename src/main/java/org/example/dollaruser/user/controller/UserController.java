@@ -1,7 +1,6 @@
 package org.example.dollaruser.user.controller;
 
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +39,7 @@ public class UserController {
         userService.signup(signupRequestDto);
         return ResponseEntity.ok().body("회원가입 성공");
     }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto,
         HttpServletResponse response) {
