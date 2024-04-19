@@ -17,6 +17,19 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Set yml files
+        uses: microsoft/variable-substitution@v1
+
+        # 아래 파일에서 변수 치환 수행
+        with:
+          files: ./src/main/resources/application.yml
+        # 치환될 변수 정의 (변수는 GitHub Secrets에 저장)
+        env:
+          spring.datasource.url: ${{ secrets.RDS_HOST }}
+          spring.datasource.username: ${{ secrets.RDS_USERNAME }}
+          spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
+          jwt.key: ${{ secrets.JWT_KEY }}
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
