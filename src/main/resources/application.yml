@@ -19,4 +19,5 @@ jwt:
   key: ${jwt.secret.key}
 server:
   port: 8082
-
+elk:
+  server: ${elk.server}

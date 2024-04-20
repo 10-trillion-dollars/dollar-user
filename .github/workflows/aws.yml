@@ -1,9 +1,6 @@
 name: Java CI with Gradle
-
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
     branches: [ "main" ]
 
 jobs:
@@ -11,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-
+    #CI
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -22,11 +19,10 @@ jobs:
 
       - name: Set yml files
         uses: microsoft/variable-substitution@v1
-        
+
         # 아래 파일에서 변수 치환 수행
         with:
           files: ./src/main/resources/application.yml
-          
         # 치환될 변수 정의 (변수는 GitHub Secrets에 저장)
         env:
           spring.datasource.url: ${{ secrets.RDS_HOST }}
@@ -34,17 +30,16 @@ jobs:
           spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
           jwt.key: ${{ secrets.JWT_KEY }}
 
-      # gradlew에 실행권한을 부여 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      # test부분을 제외하고 Gradle을 사용하여 빌드
+
       - name: Build with Gradle
         run: ./gradlew clean build -x test
 
       # Docker 이미지 빌드
       - name: docker image build
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/user .
-      
+        run: docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/user .
+
       # DockerHub 로그인
       - name: docker login
         uses: docker/login-action@v2
@@ -57,7 +52,6 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/user
 
       #CD
-
       - name: Deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -66,7 +60,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            docker compose down
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/user
-            docker compose up --detach
-        
+            sudo docker stop $(sudo docker ps -q --filter ancestor=jw059/user)
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/user
+            sudo docker run --platform linux/amd64 -d -p 8082:8082 ${{ secrets.DOCKERHUB_USERNAME }}/user
+            sudo docker image prune -f
