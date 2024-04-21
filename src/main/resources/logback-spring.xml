@@ -17,7 +17,8 @@
 
     <!-- logstash appender 정의 -->
     <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${destination}</destination> <!-- Logstash 목적지 설정 -->
+<!--        <destination>${destination}</destination> &lt;!&ndash; Logstash 목적지 설정 &ndash;&gt;-->
+        <destination>localhost:5000</destination>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
                 <mdc />
