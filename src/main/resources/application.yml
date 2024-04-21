@@ -19,4 +19,4 @@ jwt:
 server:
   port: 8082
 
-destination: ${destination}
+destination: ${elk}
