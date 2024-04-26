@@ -94,4 +94,9 @@ public class UserController {
         jwtUtil.removeJwtAtCookie(response);
         return ResponseEntity.ok().body("로그아웃 성공");
     }
+    @PostMapping("/test")
+    public ResponseEntity<String> test(){
+        userService.createMultipleUsers();
+        return ResponseEntity.ok().body("회원가입 100명 완료");
+    }
 }

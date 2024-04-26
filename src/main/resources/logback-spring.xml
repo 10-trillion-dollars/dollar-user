@@ -1,9 +1,9 @@
 <configuration>
     <!-- Spring의 환경 프로퍼티를 로드하여 Logstash 목적지 설정 -->
-<!--    <springProfile name="default">-->
-<!--        <property resource="application.yml"/>-->
-<!--    </springProfile>-->
-<!--    <springProperty scope="context" name="logstash.destination" source="destination" defaultValue="localhost:5000"/>-->
+    <!--    <springProfile name="default">-->
+    <!--        <property resource="application.yml"/>-->
+    <!--    </springProfile>-->
+    <!--    <springProperty scope="context" name="logstash.destination" source="destination" defaultValue="localhost:5000"/>-->
 
     <!-- Spring Boot의 기본 로깅 설정 파일 포함 -->
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
@@ -17,7 +17,8 @@
 
     <!-- logstash appender 정의 -->
     <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${destination}</destination> <!-- Logstash 목적지 설정 -->
+<!--        <destination>${destination}</destination> &lt;!&ndash; Logstash 목적지 설정 &ndash;&gt;-->
+        <destination>localhost:5000</destination>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
                 <mdc />
