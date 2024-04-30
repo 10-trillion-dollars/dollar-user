@@ -64,4 +64,5 @@ jobs:
             sudo docker stop $(sudo docker ps -q --filter ancestor=jw059/user)
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/user
             sudo docker run --platform linux/amd64 -d -e destination=${{ secrets.DESTINATION }} -p 8082:8082 ${{ secrets.DOCKERHUB_USERNAME }}/user
+            sudo docker container prune -f
             sudo docker image prune -f
